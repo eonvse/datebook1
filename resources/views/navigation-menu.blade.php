@@ -15,6 +15,12 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    @if (auth()->user()->hasRole('Root|Admin|Control'))
+                    <x-nav-link :href="route('filament.control.tenant')">
+                        {{ __('Control') }}
+                    </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -95,7 +101,7 @@
                         <x-slot name="content">
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Manage Account') }}
+                                {{ __('Manage Account') }}: {{ Auth::user()->name }}
                             </div>
 
                             <x-dropdown-link href="{{ route('profile.show') }}">
@@ -119,6 +125,17 @@
                                     {{ __('Log Out') }}
                                 </x-dropdown-link>
                             </form>
+
+                            <hr />
+                            <div class="px-4 text-right font-medium text-sm text-gray-500">{{ auth()->user()->email }}</div>
+                            <div class="p-1 pl-[20%] text-xs flex flex-col space-y-1">
+                                @foreach(auth()->user()->roles as $role)
+                                <x-marker.primary>
+                                    {{ $role->name }}
+                                </x-marker.primary>
+                                @endforeach
+                            </div>
+
                         </x-slot>
                     </x-dropdown>
                 </div>

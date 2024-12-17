@@ -7,6 +7,7 @@ use Filament\Facades\Filament;
 use Filament\Support\Facades\FilamentColor;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Color\Rgb;
 
 class AvatarsProvider implements Contracts\AvatarProvider
@@ -39,6 +40,10 @@ class AvatarsProvider implements Contracts\AvatarProvider
             $color = $record->color ? $this->getContrastingColor($record->color) : '#7F9CF5';
             $backgroundColor = $record->color ?? '#EBF4FF';
 
-        return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&color='.str($color)->after('#').'&background=' . str($backgroundColor)->after('#');
+            $url = $record->profile_photo_path ?
+                    Storage::url($record->profile_photo_path) :
+                    'https://ui-avatars.com/api/?name=' . urlencode($name) . '&color='.str($color)->after('#').'&background=' . str($backgroundColor)->after('#');
+
+        return $url;
     }
 }

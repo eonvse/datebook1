@@ -76,11 +76,11 @@ class TeamResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ColorColumn::make('color')
+                    ->translateLabel(),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('Team Name'))
                     ->searchable(),
-                Tables\Columns\ColorColumn::make('color')
-                    ->translateLabel(),
                 Tables\Columns\TextColumn::make('info')
                     ->label(__('Team Info'))
                     ->wrap(),
@@ -105,7 +105,8 @@ class TeamResource extends Resource
                     ->searchable()
                     ->preload()
                     ->getOptionLabelsUsing(fn (array $values): array => User::orderBy('name','asc')->pluck('name', 'id')->toArray())
-                    ->multiple(),
+                    //->multiple()
+                    ,
             ], layout: FiltersLayout::AboveContentCollapsible)
             ->filtersFormColumns(1)
             ->filtersTriggerAction(
