@@ -13,7 +13,7 @@ class AvatarsProvider implements Contracts\AvatarProvider
 {
     const _BLACK = "000000";
     const _WHITE = "FFFFFF";
-    
+
     private function getContrastingColor($hexcolor) {
 
         // определяем значения R, G и B по цвету
@@ -27,7 +27,7 @@ class AvatarsProvider implements Contracts\AvatarProvider
         // возврат по умолчанию
         return self::_BLACK;
         }
-    
+
     public function get(Model | Authenticatable $record): string
     {
         $name = str(Filament::getNameForDefaultAvatar($record))
@@ -36,8 +36,8 @@ class AvatarsProvider implements Contracts\AvatarProvider
             ->map(fn (string $segment): string => filled($segment) ? mb_substr($segment, 0, 1) : '')
             ->join(' ');
 
-            $color = $record->color ? $this->getContrastingColor($record->color) : '#FFFFFF';
-            $backgroundColor = $record->color ?? Rgb::fromString('rgb(' . FilamentColor::getColors()['gray'][950] . ')')->toHex();
+            $color = $record->color ? $this->getContrastingColor($record->color) : '#7F9CF5';
+            $backgroundColor = $record->color ?? '#EBF4FF';
 
         return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&color='.str($color)->after('#').'&background=' . str($backgroundColor)->after('#');
     }

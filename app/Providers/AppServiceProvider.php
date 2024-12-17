@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Filament::serving(function () {
             Filament::registerUserMenuItems([
-                'account' => MenuItem::make()->url(route('profile')),
+                'account' => MenuItem::make()->url(route('profile.show')),
             ]);
         });
     }

@@ -75,7 +75,7 @@ class ControlPanelProvider extends PanelProvider
                 //TODO: Сделать переход на страницу заявки вступления в группу
                 MenuItem::make()
                     ->label(__('Joining the team'))
-                    ->url(fn (): string => route('team_join'))
+                    ->url(fn (): string => '#'/*route('team_join')*/)
                     ->icon('heroicon-m-arrow-right-end-on-rectangle'),
             ])
             ->profile(isSimple: false)
