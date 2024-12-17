@@ -27,6 +27,12 @@ class Team extends Model
     {
         return $this->hasMany(Material::class);
     }
+
+    /*public function teamJoin(): HasMany
+    {
+        return $this->hasMany(TeamJoin::class);
+    }*/
+
     /**
      * Регистрация активности по событиям модели.
     */

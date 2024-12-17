@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
@@ -16,7 +17,13 @@ class TeamJoin extends Model
     }
 
     public function status(): MorphOne
-{
-    return $this->morphOne(LogStatus::class, 'owner')->latestOfMany();
-}
+    {
+        return $this->morphOne(LogStatus::class, 'owner')->latestOfMany();
+    }
+
+    /*public function team():BelongsTo
+    {
+        return $this->belongsTo(Team::class);
+    }*/
+
 }
