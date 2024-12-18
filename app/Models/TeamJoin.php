@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\ActivityCompleted;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -32,5 +33,22 @@ class TeamJoin extends Model
     {
         return $this->hasOne(User::class,'id','user_id');
     }
+
+    /**
+     * Регистрация активности по событиям модели.
+    */
+    protected static function booted(): void
+    {
+        static::created(function (TeamJoin $teamJoin) {
+            ActivityCompleted::dispatch('created',$teamJoin);
+        });
+        static::updated(function (TeamJoin $teamJoin) {
+            ActivityCompleted::dispatch('updated',$teamJoin);
+        });
+        static::deleting(function (TeamJoin $teamJoin) {
+            ActivityCompleted::dispatch('deleted',$teamJoin);
+        });
+    }
+
 
 }

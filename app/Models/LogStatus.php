@@ -9,6 +9,8 @@ class LogStatus extends Model
 {
     protected $fillable = ['owner_type', 'owner_id', 'status_id','user_id'];
 
+    protected $touches = ['owner'];
+
     public function owner(): MorphTo
     {
         return $this->morphTo();

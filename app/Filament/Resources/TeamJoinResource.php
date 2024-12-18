@@ -75,6 +75,10 @@ class TeamJoinResource extends Resource
                     ->dateTime('d.m.Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('last_status.status.description')
+                    ->translateLabel()
+                    ->badge()
+                    ,
             ])
             ->defaultSort('created_at', 'desc')
             ->defaultGroup('team.name')
@@ -90,13 +94,15 @@ class TeamJoinResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
+                /*Tables\Actions\EditAction::make()
                     ->iconButton(),
                 Tables\Actions\DeleteAction::make()
-                    ->iconButton(),
+                    ->iconButton(),*/
             ])
             ->bulkActions([
-                //
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
 
