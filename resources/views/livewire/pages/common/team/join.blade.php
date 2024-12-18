@@ -2,7 +2,10 @@
 
 use App\Models\Team;
 use App\Events\TeamJoining;
-use function Livewire\Volt\{state,mount};
+use Laravel\Jetstream\InteractsWithBanner;
+use function Livewire\Volt\{state,mount,uses};
+
+uses(InteractsWithBanner::class);
 
 state([
     'joinDialog' => false,
@@ -31,6 +34,7 @@ $closeModalJoin = function (){
 
 $sendJoin = function() {
     TeamJoining::dispatch(Auth::user(), $this->currentTeam, $this->currentNote);
+    $this->dispatch('banner-message', style:'success', message: 'Заявка отправлена');
     $this->closeModalJoin();
 }
 

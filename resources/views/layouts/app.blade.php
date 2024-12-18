@@ -18,16 +18,17 @@
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
-        <x-banner />
-
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @livewire('navigation-menu')
 
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+                    <div class="max-w-7xl mx-auto sm:grid sm:grid-cols-3">
+                        <div class="py-3 px-4 sm:px-6 lg:px-8 ">
+                            {{ $header }}
+                        </div>
+                        <div class="sm:col-span-2 content-center items-center place-content-center grid grid-cols-1"><div><x-banner /></div></div>
                     </div>
                 </header>
             @endif
