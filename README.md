@@ -7,14 +7,24 @@ cp .env.example .env
 composer install
 node install
 ```
-Настройте подключение к БД.
 
+>Настройте подключение к БД.
 ```
 php artisan key:generate
 php artisan migrate
 php artisan db:seed --class=RolesSeeder
 php artisan db:seed --class=TeamsSeeder
 php artisan storage:link
+```
+
+>Настройте Livewire в Sail закомментировав настройку livewire.php в routes
+```
+git update-index --assume-unchanged config/app.php
+```
+
+>Зарегистрируйте пользователя и назначьте ему права Root через mysql для полного управления приложением.
+```
+INSERT INTO role_user (user_id, role_id) VALUES (CURRENT_USER_ID,1);
 ```
 
 ## License
