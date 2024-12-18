@@ -20,4 +20,10 @@ class LogStatus extends Model
         return $this->hasOne(User::class,'id','user_id');
     }
 
+    // Статус
+    public function status()
+    {
+        return $this->hasOne(Status::class,'id','status_id');
+    }
+
 }

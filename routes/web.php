@@ -17,3 +17,4 @@ Route::middleware([
 });
 
 require __DIR__.'/common.php';
+require __DIR__.'/livewire.php';

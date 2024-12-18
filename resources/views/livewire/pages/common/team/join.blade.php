@@ -42,12 +42,17 @@ $sendJoin = function() {
 <div>
     @foreach ($teams as $team)
         <div class="flex space-2 items-center border-b">
-            <div class="">
-
-                <x-button.create wire:click="showModalJoin({{ $team }})">{{ __('Join') }}</x-button.create></div>
-
+            <div class="px-5">
+                @if (empty($team->teamJoinUser(auth()->id())))
+                <x-button.create wire:click="showModalJoin({{ $team }})">{{ __('Join') }}</x-button.create>
+                @else
+                <div class="text-xs">
+                <x-marker.primary>{{ $team->teamJoinUser(auth()->id())->last_status->status->description ?? $team->teamJoinUser(auth()->id())->last_status->status->name }}</x-marker.primary>
+                </div>
+                @endif
+            </div>
             <div class="my-1 w-6 min-h-6 rounded m-1" style="background-color: {{ $team->color ?? '' }}"></div>
-            <div class="my-1 p-1 sm:w-1/6"><span>{{ $team->name }} {{  }}</span></div>
+            <div class="my-1 p-1 sm:w-1/6"><span>{{ $team->name }}</span></div>
             <div class="my-1 p-1 text-wrap flex-grow"><span>{{ $team->info }}</span></div>
         </div>
     @endforeach
