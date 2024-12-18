@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Events\Team\JoinApprove;
 use App\Filament\Resources\TeamJoinResource\Pages;
 use App\Filament\Resources\TeamJoinResource\RelationManagers;
 use App\Models\TeamJoin;
@@ -13,6 +14,7 @@ use Filament\Tables\Table;
 use Filament\Tables\Grouping\Group;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class TeamJoinResource extends Resource
 {
@@ -94,6 +96,21 @@ class TeamJoinResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\Action::make('approve')
+                    ->translateLabel()
+                    ->icon('heroicon-o-check-circle')
+                    //->iconButton()
+                    ->color('success')
+                    ->action(fn($record) => JoinApprove::dispatch($record,Auth::user()))
+                    ->visible(fn($record) => $record->last_status->status->name === 'new'),
+                Tables\Actions\Action::make('cancel')
+                    ->translateLabel()
+                    ->icon('heroicon-o-x-circle')
+                    //->iconButton()
+                    ->color('warning')
+                    ->action(fn($record) => Storage::download($record->url, $record->name))
+                    ->visible(fn($record) => $record->last_status->status->name === 'new'),
+
                 /*Tables\Actions\EditAction::make()
                     ->iconButton(),
                 Tables\Actions\DeleteAction::make()

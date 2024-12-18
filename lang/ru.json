@@ -32,6 +32,7 @@
     "User does not have the right permissions.":"Пользователь не имеет нужных разрешений.",
     "Page Expired":"Срок действия страницы истек",
     "Server Error":"Внутренняя ошибка сервера",
+    "Approve":"Одобрить",
 
     "Admin":"Управление",
     "Filter":"Фильтр",
