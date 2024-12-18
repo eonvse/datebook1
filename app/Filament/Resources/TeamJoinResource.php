@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Events\Team\JoinApprove;
+use App\Events\Team\JoinCancel;
 use App\Filament\Resources\TeamJoinResource\Pages;
 use App\Filament\Resources\TeamJoinResource\RelationManagers;
 use App\Models\TeamJoin;
@@ -108,7 +109,7 @@ class TeamJoinResource extends Resource
                     ->icon('heroicon-o-x-circle')
                     //->iconButton()
                     ->color('warning')
-                    ->action(fn($record) => Storage::download($record->url, $record->name))
+                    ->action(fn($record) => JoinCancel::dispatch($record,Auth::user()))
                     ->visible(fn($record) => $record->last_status->status->name === 'new'),
 
                 /*Tables\Actions\EditAction::make()

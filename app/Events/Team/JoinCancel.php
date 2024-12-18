@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Events\team;
+namespace App\Events\Team;
 
 use App\Models\TeamJoin;
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -20,6 +21,7 @@ class JoinCancel
      */
     public function __construct(
         public TeamJoin $teamJoin,
+        public User $author,
     )
     {
         //
