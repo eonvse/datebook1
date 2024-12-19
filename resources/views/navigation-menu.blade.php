@@ -134,6 +134,9 @@
                                     {{ $role->name }}
                                 </x-marker.primary>
                                 @endforeach
+                                <x-filament::badge>
+                                    New
+                                </x-filament::badge>
                             </div>
 
                         </x-slot>
