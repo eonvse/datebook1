@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\ActivityCompleted;
+use App\Events\Team\Delete as TeamDelete;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -51,6 +52,7 @@ class Team extends Model
         });
         static::deleting(function (Team $team) {
             ActivityCompleted::dispatch('deleted',$team);
+            TeamDelete::dispatch($team);
         });
     }
 }

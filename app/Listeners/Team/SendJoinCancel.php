@@ -28,7 +28,7 @@ class SendJoinCancel
         //запись в журнал статуса успешного подтверждения запроса на вступление в группу
         $statusCanceled =
             Status::where('name','=','cancelled')->where('model','=',$team_join::class)->get()->first() ??
-                Status::create(['name'=>'cancelled','model'=>$team_join::class]);
+                Status::create(['name'=>'cancelled','model'=>$team_join::class, 'description'=>'Заявка отклонена']);
 
         LogStatus::create([
             'owner_type' => $team_join::class,

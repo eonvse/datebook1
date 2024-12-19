@@ -19,7 +19,7 @@ php artisan storage:link
 
 >Настройте Livewire в Sail закомментировав настройку livewire.php в routes
 ```
-git update-index --assume-unchanged config/app.php
+git update-index --assume-unchanged routes/livewire.php
 ```
 
 >Зарегистрируйте пользователя и назначьте ему права Root через mysql для полного управления приложением.

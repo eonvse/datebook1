@@ -35,7 +35,7 @@ class SendJoinApprove
         //запись в журнал статуса успешного подтверждения запроса на вступление в группу
         $statusApproved =
             Status::where('name','=','approved')->where('model','=',$team_join::class)->get()->first() ??
-                Status::create(['name'=>'approved','model'=>$team_join::class]);
+                Status::create(['name'=>'approved','model'=>$team_join::class, 'description'=>'Заявка одобрена']);
 
         LogStatus::create([
             'owner_type' => $team_join::class,

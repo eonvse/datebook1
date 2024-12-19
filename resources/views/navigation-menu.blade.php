@@ -127,7 +127,7 @@
                             </form>
 
                             <hr />
-                            <div class="px-4 text-right font-medium text-sm text-gray-500">{{ auth()->user()->email }}</div>
+                            <div class="px-4 text-right font-medium text-xs text-gray-400">{{ auth()->user()->email }}</div>
                             <div class="p-1 pl-[20%] text-xs flex flex-col space-y-1">
                                 @foreach(auth()->user()->roles as $role)
                                 <x-marker.primary>
@@ -173,6 +173,13 @@
                 <div>
                     <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                </div>
+                <div class="px-4 text-xs flex flex-col space-y-1">
+                    @foreach(auth()->user()->roles as $role)
+                    <x-marker.primary>
+                        {{ $role->name }}
+                    </x-marker.primary>
+                    @endforeach
                 </div>
             </div>
 

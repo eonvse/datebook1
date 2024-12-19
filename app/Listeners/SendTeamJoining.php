@@ -34,7 +34,7 @@ class SendTeamJoining
 
         $statusNew =
             Status::where('name','=','new')->where('model','=',$team_join::class)->get()->first() ??
-                Status::create(['name'=>'new','model'=>$team_join::class]);
+                Status::create(['name'=>'new','model'=>$team_join::class, 'description'=>'Новая заявка']);
 
         LogStatus::create([
             'owner_type' => $team_join::class,

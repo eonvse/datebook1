@@ -18,12 +18,11 @@ mount(function(){
 });
 
 $notificationDispatch = function() {
-    //$this->dispatch('banner-message', style:'success', message: 'Заявка отправлена');
-    $this->banner('zsdfgsdfgsdfg');
+    //$this->dispatch('banner-message', style:'danger', message: 'Заявка отправлена');
+    $this->dangerBanner('zsdfgsdfgsdfg');
     //$this->redirectRoute('dashboard');
-}
 //
-
+};
 ?>
 
 <div>

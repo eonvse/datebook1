@@ -34,11 +34,45 @@
     "Server Error":"Внутренняя ошибка сервера",
     "Approve":"Одобрить",
 
+    "Manage Account":"Учётная запись",
+    "Photo":"Фото",
+    "Select A New Photo":"Выбрать новое фото",
+    "Remove Photo":"Удалить фото",
+
+    "Two Factor Authentication":"Двухфакторная аутентификация",
+    "Add additional security to your account using two factor authentication.":"Повысьте безопасность своей учетной записи, используя двухфакторную аутентификацию.",
+    "Finish enabling two factor authentication.":"Завершите включение двухфакторной аутентификации.",
+    "You have enabled two factor authentication.":"Вы включили двухфакторную аутентификацию.",
+    "You have not enabled two factor authentication.":"Вы не включили двухфакторную аутентификацию.",
+    "When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone's Google Authenticator application.":"Если включена двухфакторная аутентификация, вам будет предложено ввести безопасный случайный токен во время проверки подлинности. Вы можете получить этот токен из приложения Google Authenticator на вашем телефоне.",
+    "To finish enabling two factor authentication, scan the following QR code using your phone's authenticator application or enter the setup key and provide the generated OTP code.":"Чтобы завершить включение двухфакторной аутентификации, отсканируйте следующий QR-код с помощью приложения authenticator на вашем телефоне или введите ключ настройки и введите сгенерированный OTP-код.",
+    "Two factor authentication is now enabled. Scan the following QR code using your phone's authenticator application or enter the setup key.":"Теперь включена двухфакторная аутентификация. Отсканируйте следующий QR-код с помощью приложения для проверки подлинности на вашем телефоне или введите ключ настройки.",
+    "Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.":"Сохраните эти коды восстановления в безопасном менеджере паролей. Они могут быть использованы для восстановления доступа к вашей учетной записи в случае утери устройства двухфакторной аутентификации.",
+    "Regenerate Recovery Codes":"Регенерировать коды восстановления",
+    "Enable":"Включить",
+    "Confirm":"Подтвердить",
+    "Show Recovery Codes":"Показать коды восстановления",
+    "For your security, please confirm your password to continue.":"В целях вашей безопасности, пожалуйста, подтвердите свой пароль, чтобы продолжить.",
+    "Setup Key":"Ключ установки",
+    "Code":"Код",
+
+    "Browser Sessions":"Сеансы",
+    "Manage and log out your active sessions on other browsers and devices.":"Управляйте своими активными сеансами в других браузерах и на других устройствах и выходите из них.",
+    "If necessary, you may log out of all of your other browser sessions across all of your devices. Some of your recent sessions are listed below; however, this list may not be exhaustive. If you feel your account has been compromised, you should also update your password.":"При необходимости вы можете выйти из всех других сеансов работы с браузером на всех ваших устройствах. Ниже перечислены некоторые из ваших последних сеансов, однако этот список может быть неполным. Если вы считаете, что ваша учетная запись была взломана, вам также следует обновить свой пароль.",
+    "Unknown":"Неизвестно",
+    "This device":"Это устройство",
+    "Last active":"Последний активный",
+    "Log Out Other Browser Sessions":"Выйти из других сеансов",
+    "Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.":"Пожалуйста, введите свой пароль, чтобы подтвердить, что вы хотите выйти из других сеансов на всех ваших устройствах.",
+    "Done.":"Выполнено.",
+
+    "Permanently delete your account.":"Навсегда удалить свою учетную запись.",
+    "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.":"Вы уверены, что хотите удалить свою учетную запись? Как только ваша учетная запись будет удалена, все ее ресурсы и данные будут удалены безвозвратно. Пожалуйста, введите свой пароль, чтобы подтвердить, что вы хотите удалить свою учетную запись безвозвратно.",
+
     "Admin":"Управление",
     "Filter":"Фильтр",
     "management":"Администрирование",
     "management_team":"Управление группами",
-
 
     "Role":"Роль",
     "Roles":"Роли",
@@ -115,6 +149,7 @@
     "Join":"Вступить",
     "TeamJoin":"Заявка на вступление",
     "TeamsJoin":"Заявки на вступление",
+    "Note":"Заметка",
 
 
     "Register": "Регистрация"
