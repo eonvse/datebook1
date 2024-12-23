@@ -32,5 +32,20 @@ $notificationDispatch = function() {
         </div>
     @endforeach
     <x-button.create wire:click='notificationDispatch'> Banner </x-button.create>
+    <x-marker>
+        marker default info
+    </x-marker>
+    <x-marker type="primary">
+        marker type primary
+    </x-marker>
+    <x-marker type="secondary">
+        marker type secondary
+    </x-marker>
+    <x-marker type="danger">
+        marker type danger
+    </x-marker>
+    <x-marker type="gray">
+        marker type gray
+    </x-marker>
 </div>
 </div>
