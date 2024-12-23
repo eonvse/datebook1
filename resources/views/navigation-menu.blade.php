@@ -5,15 +5,19 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('start') }}">
                         <x-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link href="{{ route('start') }}" :active="request()->routeIs('start')">
+                        {{ __('Start page') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="{{ route('debug') }}" :active="request()->routeIs('debug')">
+                        {{ __('Debug page') }}
                     </x-nav-link>
 
                     @if (auth()->user()->hasRole('Root|Admin|Control'))
@@ -159,9 +163,18 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link href="{{ route('start') }}" :active="request()->routeIs('start')">
+                {{ __('Start page') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('debug') }}" :active="request()->routeIs('debug')">
+                {{ __('Debug page') }}
+            </x-responsive-nav-link>
+
+            @if (auth()->user()->hasRole('Root|Admin|Control'))
+            <x-responsive-nav-link href="{{ route('filament.control.tenant') }}" >
+                {{ __('Control') }}
+            </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

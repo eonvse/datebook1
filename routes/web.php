@@ -11,9 +11,9 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
+    Route::get('/debug', function () {
         return view('dashboard');
-    })->name('dashboard');
+    })->name('debug');
 });
 
 require __DIR__.'/common.php';
