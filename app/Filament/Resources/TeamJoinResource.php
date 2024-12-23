@@ -4,15 +4,21 @@ namespace App\Filament\Resources;
 
 use App\Events\Team\JoinApprove;
 use App\Events\Team\JoinCancel;
+
+use App\Models\TeamJoin;
+use App\Models\Status;
+
 use App\Filament\Resources\TeamJoinResource\Pages;
 use App\Filament\Resources\TeamJoinResource\RelationManagers;
-use App\Models\TeamJoin;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Grouping\Group;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
@@ -94,8 +100,39 @@ class TeamJoinResource extends Resource
                     ->collapsible(),
             ])
             ->filters([
-                //
-            ])
+                Filter::make('status')
+                    ->form([Forms\Components\Select::make('status_id')
+                                ->label(__("Status"))
+                                ->options(function() {
+                                    return Status::where('model','=',TeamJoin::class)->pluck('description','id')->toArray();
+                                })
+                            ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                                ->when(
+                                    $data['status_id'],
+                                    fn (Builder $query, $status_id): Builder => $query->
+                                                    whereRelation('last_status', 'status_id', $status_id)
+                                );
+                    })
+                    ->indicateUsing(function (array $data): ?string {
+                        if (! $data['status_id']) {
+                            return null;
+                        }
+                 
+                        return __('Status').': '. Status::find($data['status_id'])->description;
+                    }),
+
+                ], layout: FiltersLayout::AboveContentCollapsible)
+            ->persistFiltersInSession()
+            //->deferFilters()
+            ->filtersTriggerAction(
+                fn (Action $action) => $action
+                    ->button()
+                    ->label(__('Filter')),
+                )
+            ->filtersFormColumns(2)
+    
             ->actions([
                 Tables\Actions\Action::make('approve')
                     ->translateLabel()
