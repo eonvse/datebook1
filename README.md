@@ -17,7 +17,7 @@ php artisan db:seed --class=TeamsSeeder
 php artisan storage:link
 ```
 
->Настройте Livewire в Sail закомментировав настройку livewire.php в routes
+>Настройте Livewire. (routes/livewire.php. В Sail закомментируйте содержимое файла)
 ```
 git update-index --assume-unchanged routes/livewire.php
 ```
