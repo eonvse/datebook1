@@ -88,6 +88,9 @@ class TeamJoinResource extends Resource
                     ->translateLabel()
                     ->badge()
                     ,
+                Tables\Columns\TextColumn::make('last_status.author.name')
+                    ->translateLabel()
+                    ,
             ])
             ->defaultSort('created_at', 'desc')
             ->defaultGroup('team.name')
@@ -119,7 +122,7 @@ class TeamJoinResource extends Resource
                         if (! $data['status_id']) {
                             return null;
                         }
-                 
+
                         return __('Status').': '. Status::find($data['status_id'])->description;
                     }),
 
@@ -132,7 +135,7 @@ class TeamJoinResource extends Resource
                     ->label(__('Filter')),
                 )
             ->filtersFormColumns(2)
-    
+
             ->actions([
                 Tables\Actions\Action::make('approve')
                     ->translateLabel()

@@ -60,17 +60,22 @@ $sendJoin = function() {
             <div class="my-1 p-1 text-wrap flex-grow"><span>{{ $team->info }}</span></div>
         </div>
     @endforeach
+    <div>Вы состоите в следующих группах</div>
+    @foreach (auth()->user()->teams as $teamUser)
+        <div class="flex space-2 items-center border-b">
+            <div class="my-1 w-6 min-h-6 rounded m-1" style="background-color: {{ $teamUser->color ?? '' }}"></div>
+            <div>{{ $teamUser->name }}</div>
+            <div>{{ $teamUser->description }}</div>
+        </div>
+    @endforeach
     <div>
     <x-modal-wire.dialog wire:model="joinDialog" maxWidth="md">
         <x-slot name="title">
             <span class="grow">{{ __('Joining the team') }}: {{ $currentTeam->name ?? '' }}</span>
             <x-button.icon-cancel @click="show = false" wire:click="closeModalJoin" /></x-slot>
-        <x-slot name="content">
-            <div class="flex-col space-y-2">
-                <div class="font-bold text-xl flex">
-                    {{ __('Joining the team') }}:
-                    <div class="my-1 w-6 min-h-6 rounded m-1" style="background-color: {{ $currentTeam->color ?? '' }}"></div>
-                    {{ $currentTeam->name ?? '' }}?
+            <x-slot name="content">
+                <div class="flex-col space-y-2">
+                    <div class="font-bold text-xl flex">
                 </div>
                 <div>Комментарий
                     <x-input.textarea wire:model="currentNote" />
