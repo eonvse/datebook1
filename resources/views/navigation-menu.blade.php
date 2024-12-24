@@ -134,13 +134,10 @@
                             <div class="px-4 text-right font-medium text-xs text-gray-400">{{ auth()->user()->email }}</div>
                             <div class="p-1 pl-[20%] text-xs flex flex-col space-y-1">
                                 @foreach(auth()->user()->roles as $role)
-                                <x-marker.primary>
+                                <x-marker>
                                     {{ $role->name }}
-                                </x-marker.primary>
+                                </x-marker>
                                 @endforeach
-                                <x-filament::badge>
-                                    New
-                                </x-filament::badge>
                             </div>
 
                         </x-slot>
@@ -192,9 +189,9 @@
                 </div>
                 <div class="px-4 text-xs flex flex-col space-y-1">
                     @foreach(auth()->user()->roles as $role)
-                    <x-marker.primary>
+                    <x-marker>
                         {{ $role->name }}
-                    </x-marker.primary>
+                    </x-marker>
                     @endforeach
                 </div>
             </div>
