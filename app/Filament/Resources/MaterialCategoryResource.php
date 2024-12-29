@@ -65,6 +65,8 @@ class MaterialCategoryResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->tooltip(fn (Model $record): string => "{$record->description}"),
+                Tables\Columns\TextColumn::make('description')
+                    ->translateLabel(),
                 Tables\Columns\TextColumn::make('order')
                     ->translateLabel()
                     ->numeric()
