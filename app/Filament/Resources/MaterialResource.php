@@ -73,6 +73,9 @@ class MaterialResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label(__('Material category'))
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->translateLabel()
                     ->searchable(),
@@ -85,9 +88,6 @@ class MaterialResource extends Resource
                     ->translateLabel()
                     ->wrap()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('category.name')
-                    ->label(__('Material category'))
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('files_count')->counts('files')
                     ->label(__('Count files')),
                 Tables\Columns\TextColumn::make('user.name')
