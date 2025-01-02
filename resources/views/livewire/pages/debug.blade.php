@@ -47,5 +47,8 @@ $notificationDispatch = function() {
     <x-marker type="gray">
         marker type gray
     </x-marker>
+    @foreach (Auth::user()->teams as $team)
+        {{ $team->id }}
+    @endforeach
 </div>
-</div>
+

@@ -7,10 +7,12 @@ use App\Events\ActivityCompleted;
 use App\Events\UserCreated;
 use App\Traits\HasRoles;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasDefaultTenant;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -19,7 +21,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements FilamentUser, HasTenants
+class User extends Authenticatable implements FilamentUser, HasDefaultTenant, HasTenants
 {
     use HasApiTokens;
 
@@ -117,6 +119,32 @@ public function canAccessTenant(Model $tenant): bool
 {
     return true;//$this->teams()->whereKey($tenant)->exists();
 }
+
+public function getDefaultTenant(Panel $panel): ?Model
+{
+    return $this->currentTeam;
+}
+
+public function currentTeam(): BelongsTo
+{
+    return $this->belongsTo(Team::class, 'current_team_id');
+}
+
+public function isCurrentTeam(Team $team){
+    return $this->currentTeam() === $team;
+}
+
+public function switchTeam($team){
+
+    $this->forceFill([
+        'current_team_id' => $team->id,
+    ])->save();
+
+    $this->setRelation('currentTeam', $team);
+
+    return true;
+}
+
 
 /**
  * Регистрация активности по событиям модели.

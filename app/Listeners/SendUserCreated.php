@@ -25,10 +25,13 @@ class SendUserCreated
     {
         //Добавление в группу по умолчанию
 
-        
-        $defaultTeam = Team::where('name','=','Public')->get();
+
+        $defaultTeam = Team::where('name','=','Public')->first();
         $event->user->teams()->attach($defaultTeam);
-        
+
+        $event->user->current_team_id = $defaultTeam->id;
+        $event->user->save();
+
         //Назначение роль по умолчанию TODO
     }
 }
