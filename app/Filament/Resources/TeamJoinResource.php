@@ -5,21 +5,22 @@ namespace App\Filament\Resources;
 use App\Events\Team\JoinApprove;
 use App\Events\Team\JoinCancel;
 
-use App\Models\TeamJoin;
-use App\Models\Status;
-
 use App\Filament\Resources\TeamJoinResource\Pages;
 use App\Filament\Resources\TeamJoinResource\RelationManagers;
+
+use App\Models\Status;
+use App\Models\TeamJoin;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Table;
-use Filament\Tables\Grouping\Group;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
-use Filament\Tables\Actions\Action;
+use Filament\Tables\Grouping\Group;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
@@ -87,6 +88,11 @@ class TeamJoinResource extends Resource
                 Tables\Columns\TextColumn::make('last_status.status.description')
                     ->translateLabel()
                     ->badge()
+                    ->color(fn (Model $record): string => match ($record->last_status->status->name) {
+                        'new' => 'info',
+                        'approved' => 'success',
+                        'cancelled' => 'danger',
+                    })
                     ,
                 Tables\Columns\TextColumn::make('last_status.author.name')
                     ->translateLabel()
