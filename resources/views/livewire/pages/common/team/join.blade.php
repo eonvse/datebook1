@@ -45,7 +45,7 @@ $sendJoin = function() {
 
 <div>
     @foreach ($teams as $team)
-        <div class="grid grid-cols-3 sm:grid-cols-6 items-center border-b">
+        <div class="grid grid-cols-3 md:grid-cols-6 items-center border-b">
             <div class="px-5 justify-center">
                 @if (empty($team->teamJoinUser(auth()->id())))
                 <div class="flex">
@@ -53,15 +53,22 @@ $sendJoin = function() {
                 </div>
                 @else
                 <div class="flex">
-                    <div class="flex-none"><x-marker.primary>{{ $team->teamJoinUser(auth()->id())->last_status->status->description ?? $team->teamJoinUser(auth()->id())->last_status->status->name }}</x-marker.primary></div>
+                    @php
+                        $markerSlot = $team->teamJoinUser(auth()->id())->last_status->status->description ?? $team->teamJoinUser(auth()->id())->last_status->status->name;
+                        $markerType = match ($team->teamJoinUser(auth()->id())->last_status->status->name) {
+                            'cancelled' => 'danger',
+                            default => 'info',
+                        }
+                    @endphp
+                    <div class="flex-none"><x-marker :type="$markerType">{{ $markerSlot }}</x-marker></div>
                 </div>
                 @endif
             </div>
-            <div class="flex items-center my-1 p-1 sm:col-span-2">
+            <div class="flex items-center my-1 p-1 md:col-span-2">
                 <div class="flex-none my-1 w-6 min-h-6 rounded m-1" style="background-color: {{ $team->color ?? '' }}"></div>
                 <div>{{ $team->name }}</div>
             </div>
-            <div class="my-1 p-1 text-wrap flex sm:col-span-3"><span>{{ $team->info }}</span></div>
+            <div class="my-1 p-1 text-wrap flex md:col-span-3"><span>{{ $team->info }}</span></div>
         </div>
     @endforeach
     <div>Вы состоите в следующих группах</div>

@@ -38,8 +38,8 @@ $notificationDispatch = function() {
     <x-marker type="primary">
         marker type primary
     </x-marker>
-    <x-marker type="secondary">
-        marker type secondary
+    <x-marker type="warning">
+        marker type warning
     </x-marker>
     <x-marker type="danger">
         marker type danger
@@ -47,8 +47,9 @@ $notificationDispatch = function() {
     <x-marker type="gray">
         marker type gray
     </x-marker>
-    @foreach (Auth::user()->teams as $team)
-        {{ $team->id }}
-    @endforeach
+    <x-marker type="success">
+        marker type success
+    </x-marker>
+
 </div>
 
