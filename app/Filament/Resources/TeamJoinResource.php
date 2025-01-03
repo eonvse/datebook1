@@ -154,7 +154,7 @@ class TeamJoinResource extends Resource
                     ->translateLabel()
                     ->icon('heroicon-o-x-circle')
                     //->iconButton()
-                    ->color('warning')
+                    ->color('danger')
                     ->action(fn($record) => JoinCancel::dispatch($record,Auth::user()))
                     ->visible(fn($record) => $record->last_status->status->name === 'new'),
 
