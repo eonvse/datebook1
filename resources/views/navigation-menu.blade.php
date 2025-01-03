@@ -45,7 +45,9 @@
                             </x-slot>
 
                             <x-slot name="content">
+                                <div class="px-4 text-xs text-gray-400">{{ __('Team using') }}</div>
                                 <div class="w-60">
+                                    <x-dropdown-link href="{{ route('team_join') }}">{{ __('Joining the team') }}</x-dropdown-link>
                                     <!-- Team Switcher -->
                                     @if (Auth::user()->teams->count() > 1)
                                         <div class="border-t border-gray-200 dark:border-gray-600"></div>
@@ -53,7 +55,6 @@
                                         <div class="block px-4 py-2 text-xs text-gray-400">
                                             {{ __('Switch Teams') }}
                                         </div>
-
                                         @foreach (Auth::user()->teams as $team)
                                             <x-switchable-team :team="$team" />
                                         @endforeach
@@ -202,6 +203,8 @@
 
                 <!-- Team Management -->
                     <div class="border-t border-gray-200 dark:border-gray-600"></div>
+                    <div class="px-4 text-xs text-gray-400">{{ __('Team using') }}</div>
+                    <x-dropdown-link href="{{ route('team_join') }}">{{ __('Joining the team') }}</x-dropdown-link>
                     <!-- Team Switcher -->
                     @if (Auth::user()->teams->count() > 1)
                         <div class="border-t border-gray-200 dark:border-gray-600"></div>

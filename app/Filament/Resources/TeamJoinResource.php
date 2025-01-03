@@ -95,7 +95,7 @@ class TeamJoinResource extends Resource
                     })
                     ,
                 Tables\Columns\TextColumn::make('last_status.author.name')
-                    ->translateLabel()
+                    ->label(__('Executor'))
                     ,
             ])
             ->defaultSort('created_at', 'desc')
