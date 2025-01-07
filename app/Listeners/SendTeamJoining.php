@@ -3,11 +3,13 @@
 namespace App\Listeners;
 
 use App\Events\TeamJoining;
+use App\Mail\Teams\JoinCreated;
 use App\Models\LogStatus;
 use App\Models\Status;
 use App\Models\TeamJoin;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Mail;
 
 
 class SendTeamJoining
@@ -42,5 +44,8 @@ class SendTeamJoining
             'status_id' => $statusNew->id,
             'user_id' => $event->user->id
         ]);
+
+        //TODO: выбрать пользователей с необходимыми ролями и отправить им сообщение
+        Mail::to('eonvse@example')->send(new JoinCreated($event->team,$event->user,$event->note));
     }
 }
