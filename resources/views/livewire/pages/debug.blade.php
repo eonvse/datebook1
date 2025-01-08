@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\TeamJoin;
+use App\DB\Teams as TeamsDB;
 use Laravel\Jetstream\InteractsWithBanner;
 
 use function Livewire\Volt\{state, mount,uses};
@@ -9,6 +10,7 @@ uses(InteractsWithBanner::class);
 
 state([
     'notifications' => false,
+    'testRole' => '',
 ]);
 
 state ('teamJoin');
@@ -26,6 +28,13 @@ $notificationDispatch = function() {
 ?>
 
 <div>
+    <div>
+        <x-input.text wire:model.live="testRole" />
+        {{ auth()->user()->hasRole($testRole) ? '+' : '-' }}
+        @foreach (TeamsDB::getEmailsRole($testRole) as $email)
+            {{ $email }}
+        @endforeach
+    </div>
     @foreach ($teamJoin as $join)
         <div>
            {{ $join->id}} {{ $join->user->name }} {{ $join->team->name }} {{ $join->note }} {{ $join->last_status->status->description }}
