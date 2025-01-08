@@ -10,9 +10,9 @@ class Teams {
         if (empty($role)) return [];
         $roleModel = Role::where('name','=',$role)->first();
         if (empty($roleModel)) return [];
-        $roleUsers = $roleModel->users()->pluck('email')->toArray();
+        $usersRoleEmail = $roleModel->users()->pluck('email')->toArray();
 
-        return $roleUsers;
+        return $usersRoleEmail;
     }
 
 }
