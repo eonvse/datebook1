@@ -3,10 +3,14 @@
 namespace App\Listeners\Team;
 
 use App\Events\Team\JoinCancel;
+use App\Mail\Teams\JoinCancelled;
+use App\Models\User;
 use App\Models\LogStatus;
 use App\Models\Status;
+use App\Models\Team;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Mail;
 
 class SendJoinCancel
 {
@@ -36,5 +40,11 @@ class SendJoinCancel
             'status_id' => $statusCanceled->id,
             'user_id' => $event->author->id
         ]);
+
+        //отправка уведомления пользователю о подтверждении заявки
+        $joinUser = User::find($team_join->user_id);
+        $joinTeam = Team::find($team_join->team_id);
+        Mail::to($joinUser->email)->send(new JoinCancelled($joinTeam,$joinUser->name));
+
     }
 }

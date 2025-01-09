@@ -3,12 +3,14 @@
 namespace App\Listeners\Team;
 
 use App\Events\Team\JoinApprove;
+use App\Mail\Teams\JoinApproved;
 use App\Models\LogStatus;
 use App\Models\Status;
 use App\Models\User;
 use App\Models\Team;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Mail;
 
 class SendJoinApprove
 {
@@ -43,6 +45,9 @@ class SendJoinApprove
             'status_id' => $statusApproved->id,
             'user_id' => $event->author->id
         ]);
+
+        //отправка уведомления пользователю о подтверждении заявки
+        Mail::to($approvedUser->email)->send(new JoinApproved($approvedTeam,$approvedUser->name));
 
     }
 }
