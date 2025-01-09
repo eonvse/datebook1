@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\DB\Teams as TeamsDB;
 use App\Events\TeamJoining;
 use App\Mail\Teams\JoinCreated;
 use App\Models\LogStatus;
@@ -45,7 +46,9 @@ class SendTeamJoining
             'user_id' => $event->user->id
         ]);
 
-        //TODO: выбрать пользователей с необходимыми ролями и отправить им сообщение
-        Mail::to('eonvse@example')->send(new JoinCreated($event->team,$event->user,$event->note));
+        //Выбор email пользователей с необходимыми ролями и отправка им сообщения
+        foreach (TeamsDB::getRolesEmails('Root|Teams Admin') as $email) {
+            Mail::to($email)->send(new JoinCreated($event->team,$event->user,$event->note));
+        }
     }
 }

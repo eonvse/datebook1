@@ -6,13 +6,17 @@ use App\Models\Role;
 
 class Teams {
 
-    public static function getEmailsRole(?string $role): array {
-        if (empty($role)) return [];
-        $roleModel = Role::where('name','=',$role)->first();
-        if (empty($roleModel)) return [];
-        $usersRoleEmail = $roleModel->users()->pluck('email')->toArray();
+    public static function getRolesEmails(string $role): array {
+        $roleArr = convertPipeToArray($role);
+        $usersRoleEmail = '';
+        foreach ($roleArr as $roleElement){
+            $roleModel = Role::where('name','=',$roleElement)->first();
+            if (empty($roleModel)) continue;
+            $usersRoleEmail .= implode("|",$roleModel->users()->pluck('email')->toArray());
+            $usersRoleEmail.= "|";  // add pipe for next role
+        }
 
-        return $usersRoleEmail;
+        return array_filter(explode("|",$usersRoleEmail));
     }
 
 }

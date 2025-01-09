@@ -31,8 +31,8 @@ $notificationDispatch = function() {
     <div>
         <x-input.text wire:model.live="testRole" />
         {{ auth()->user()->hasRole($testRole) ? '+' : '-' }}
-        @foreach (TeamsDB::getEmailsRole($testRole) as $email)
-            {{ $email }}
+        @foreach (TeamsDB::getRolesEmails($testRole) as $email)
+            <div>{{ $email ? $email : '-' }}</div>
         @endforeach
     </div>
     @foreach ($teamJoin as $join)
