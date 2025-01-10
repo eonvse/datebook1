@@ -32,6 +32,7 @@ class ControlPanelProvider extends PanelProvider
             ->default()
             ->id('control')
             ->path('control')
+            ->brandLogo(fn () => view('components.control-logo'))
             ->login()
             //->profile()
             ->colors([
@@ -72,7 +73,7 @@ class ControlPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->tenant(Team::class, slugAttribute: 'slug')
             ->tenantMenuItems([
-                //TODO: Сделать переход на страницу заявки вступления в группу
+                //Переход на страницу заявки вступления в группу
                 MenuItem::make()
                     ->label(__('Joining the team'))
                     ->url(fn (): string => route('team_join'))

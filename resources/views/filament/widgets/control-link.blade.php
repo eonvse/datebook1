@@ -1,6 +1,7 @@
 <x-filament-widgets::widget>
     <x-filament::section>
         <div class='flex items-center gap-x-3'>
+            <div><x-application-logo class="h-8 w-8" /></div>
             <div class='flex-1'>
                 <p class="h-5 text-xl text-gray-950 dark:text-white font-bold">{{ config('app.name', 'Laravel') }}</p>
                 <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
