@@ -118,6 +118,11 @@ class TeamJoinResource extends Resource
                     ->collapsible(),
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('team.name')
+                    ->translateLabel()
+                    ->relationship('team', 'name')
+                    ,
+
                 Filter::make('status')
                     ->form([Forms\Components\Select::make('status_id')
                                 ->label(__("Status"))
