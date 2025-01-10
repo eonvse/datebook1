@@ -85,6 +85,11 @@ class TeamJoinResource extends Resource
                     ->dateTime('d.m.Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->translateLabel()
+                    ->dateTime('d.m.Y H:i')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('last_status.status.description')
                     ->translateLabel()
                     ->badge()
@@ -94,11 +99,15 @@ class TeamJoinResource extends Resource
                         'cancelled' => 'danger',
                     })
                     ,
+                Tables\Columns\ViewColumn::make('status log')->view('filament.tables.columns.status-log')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                ,
                 Tables\Columns\TextColumn::make('last_status.author.name')
                     ->label(__('Executor'))
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ,
             ])
-            ->defaultSort('created_at', 'desc')
+            ->defaultSort('updated_at', 'desc')
             ->defaultGroup('team.name')
             ->groups([
                 Group::make('team.name')
