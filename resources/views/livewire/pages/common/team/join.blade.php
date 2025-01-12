@@ -73,10 +73,15 @@ $sendJoin = function() {
     @endforeach
     <div>Вы состоите в следующих группах</div>
     @foreach (auth()->user()->teams as $teamUser)
-        <div class="flex space-2 items-center border-b">
+        <div class="flex space-x-2 items-center border-b">
+            <div>Покинуть группу.??? Кнопка. Действие. ???</div>
             <div class="my-1 w-6 min-h-6 rounded m-1" style="background-color: {{ $teamUser->color ?? '' }}"></div>
-            <div>{{ $teamUser->name }}</div>
-            <div>{{ $teamUser->description }}</div>
+            <div>{{ $teamUser->name }}.</div>
+            <div class="text-neutral-500">
+                {{ $teamUser->info ? $teamUser->info.'.' : '' }}
+                <span class="text-sm text-gray-400">(Материалов: {{ $teamUser->materials()->count() }})</span>
+            </div>
+
         </div>
     @endforeach
     <div>
