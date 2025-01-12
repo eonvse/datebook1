@@ -129,6 +129,9 @@ class TeamJoinResource extends Resource
                                 ->options(function() {
                                     return Status::where('model','=',TeamJoin::class)->pluck('description','id')->toArray();
                                 })
+                                ->default(function() {
+                                    return Status::where('model','=',TeamJoin::class)->where('name','=','new')->first()->id;
+                                })
                             ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
