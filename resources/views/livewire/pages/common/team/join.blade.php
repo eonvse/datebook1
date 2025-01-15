@@ -9,6 +9,7 @@ uses(InteractsWithBanner::class);
 
 state([
     'joinDialog' => false,
+    'exitDialog' => false,
     'currentTeam' => null,
     'currentNote' => '',
 ]);
@@ -36,6 +37,22 @@ $sendJoin = function() {
     TeamJoining::dispatch(Auth::user(), $this->currentTeam, $this->currentNote);
     $this->banner('Заявка отправлена');
     $this->closeModalJoin();
+};
+
+$showModalExit = function (Team $team) {
+    $this->exitDialog = true;
+    $this->currentTeam = $team;
+};
+
+$closeModalExit = function (){
+    $this->exitDialog = false;
+    $this->currentTeam = null;
+};
+
+$sendExit = function() {
+    //TeamJoining::dispatch(Auth::user(), $this->currentTeam, $this->currentNote);
+    $this->banner('Вы вышли из группы '.$this->currentTeam->name);
+    $this->closeModalExit();
 }
 
 
@@ -44,6 +61,7 @@ $sendJoin = function() {
 ?>
 
 <div>
+    <div class="font-semibold text-lg mt-2">Заявки на вступление:</div>
     @foreach ($teams as $team)
         <div class="grid grid-cols-3 md:grid-cols-6 items-center border-b">
             <div class="px-5 justify-center">
@@ -71,7 +89,7 @@ $sendJoin = function() {
             <div class="my-1 p-1 text-wrap flex md:col-span-3"><span>{{ $team->info }}</span></div>
         </div>
     @endforeach
-    <div>Вы состоите в следующих группах</div>
+    <div class="font-semibold text-lg mt-5">Вы состоите в следующих группах</div>
     @foreach (auth()->user()->teams as $teamUser)
         <div class="md:flex space-x-2 items-center border-b p-1">
             <div class="flex items-center">
@@ -82,10 +100,11 @@ $sendJoin = function() {
                 {{ $teamUser->info ?? '' }}
                 <span class="text-sm text-gray-400">(Материалов: {{ $teamUser->materials()->count() }})</span>
             </div>
-            <div class="grow text-right"><x-button.danger>Покинуть группу</x-button.danger></div>
+            <div class="grow text-right"><x-button.warning wire:click="showModalExit({{ $teamUser }})">Покинуть группу</x-button.warning></div>
         </div>
     @endforeach
     <div>
+
     <x-modal-wire.dialog wire:model="joinDialog" maxWidth="md">
         <x-slot name="title">
             <span class="grow">{{ __('Joining the team') }}: {{ $currentTeam->name ?? '' }}</span>
@@ -104,5 +123,26 @@ $sendJoin = function() {
             </div>
         </x-slot>
     </x-modal-wire.dialog>
+
+    <x-modal-wire.dialog wire:model="exitDialog" maxWidth="md" type="warn">
+        <x-slot name="title">
+            <span class="grow">{{ __('Team exit') }} {{ $currentTeam->name ?? '' }}</span>
+            <x-button.icon-cancel wire:click="closeModalExit" class="text-gray-700 hover:text-white dark:hover:text-white" /></x-slot>
+        <x-slot name="content">
+            <div class="flex-col space-y-2">
+                <x-input.label class="text-lg font-medium">Вы действительно хотите покинуть группу {{ $currentTeam->name ?? '' }}?
+                    <div class="text-black dark:text-white flex items-center">
+                        <div class="w-4 mx-1 {{ $delRecord->base ?? '' }} dark:{{ $delRecord->dark ?? '' }}">&nbsp;</div>
+                        <div>{{ $delRecord->name ?? '' }}</div>
+                    </div>
+                    <div>{!! $delRecord->content ?? '' !!}</div>
+                    <div class="text-red-600 dark:text-red-200 shadow p-1">{{ __('Team Exit Message') }}</div>
+                </x-input.label>
+                <x-button.secondary wire:click="closeModalExit">{{ __('Cancel') }}</x-button.secondary>
+                <x-button.danger wire:click="sendExit()">{{ __('Exit')}}</x-button.danger>
+            </div>
+        </x-slot>
+    </x-modal-wire.dialog>
+
     </div>
 </div>
