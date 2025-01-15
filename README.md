@@ -4,12 +4,21 @@
 ```
 git clone https://github.com/eonvse/datebook1
 cd datebook1
-cp .env.example .env
+```
+### Local XAMPP
+```
+cp .env.example .env 
 composer install
 node install
 ```
-
 >Настройте подключение к БД.
+
+### Docker ([Laravel Sail](https://laravel.com/docs/11.x/sail#main-content))
+```
+sail up
+sail shell
+```
+
 ```
 php artisan key:generate
 php artisan migrate
