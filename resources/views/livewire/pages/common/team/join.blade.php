@@ -2,6 +2,7 @@
 
 use App\Models\Team;
 use App\Events\TeamJoining;
+use App\Events\Team\UserExit;
 use Laravel\Jetstream\InteractsWithBanner;
 use function Livewire\Volt\{state,mount,uses};
 
@@ -50,9 +51,10 @@ $closeModalExit = function (){
 };
 
 $sendExit = function() {
-    //TeamJoining::dispatch(Auth::user(), $this->currentTeam, $this->currentNote);
+    UserExit::dispatch(Auth::user(), $this->currentTeam);
     $this->banner('Вы вышли из группы '.$this->currentTeam->name);
-    $this->closeModalExit();
+    return redirect(request()->header('Referer'));
+    //$this->closeModalExit();
 }
 
 
@@ -90,6 +92,9 @@ $sendExit = function() {
         </div>
     @endforeach
     <div class="font-semibold text-lg mt-5">Вы состоите в следующих группах</div>
+    @php
+        $countTeams = auth()->user()->teams->count();
+    @endphp
     @foreach (auth()->user()->teams as $teamUser)
         <div class="md:flex space-x-2 items-center border-b p-1">
             <div class="flex items-center">
@@ -100,7 +105,9 @@ $sendExit = function() {
                 {{ $teamUser->info ?? '' }}
                 <span class="text-sm text-gray-400">(Материалов: {{ $teamUser->materials()->count() }})</span>
             </div>
+            @if ($countTeams>1)
             <div class="grow text-right"><x-button.warning wire:click="showModalExit({{ $teamUser }})">Покинуть группу</x-button.warning></div>
+            @endif
         </div>
     @endforeach
     <div>
