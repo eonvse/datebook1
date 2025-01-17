@@ -47,6 +47,9 @@ class TeamJoin extends Model
         });
         static::deleting(function (TeamJoin $teamJoin) {
             ActivityCompleted::dispatch('deleted',$teamJoin);
+            $teamJoin->log_statuses->each(function($log_status) {
+                $log_status->delete();
+            });
         });
     }
 

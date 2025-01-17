@@ -3,6 +3,7 @@
 namespace App\Listeners\Team;
 
 use App\Events\Team\UserExit;
+use App\Models\TeamJoin;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -35,8 +36,12 @@ class SendUserExit
         //удалить пользователя из группы
         $event->user->teams()->detach($event->team);
 
+        //удалить заявки на вступление в группу по пользователю и лог статусов
+        TeamJoin::where('user_id','=',$event->user->id)->where('team_id','=',$event->team->id)->first()->delete();
+
+
         //лог активности ???
-        
+
         //отправить уведомление о выходе пользователя ???
     }
 }
