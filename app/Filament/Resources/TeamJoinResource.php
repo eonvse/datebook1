@@ -122,7 +122,6 @@ class TeamJoinResource extends Resource
                     ->translateLabel()
                     ->relationship('team', 'name')
                     ,
-
                 Filter::make('status')
                     ->form([Forms\Components\Select::make('status_id')
                                 ->label(__("Status"))
@@ -148,6 +147,10 @@ class TeamJoinResource extends Resource
 
                         return __('Status').': '. Status::find($data['status_id'])->description;
                     }),
+                Tables\Filters\SelectFilter::make('user.name')
+                    ->translateLabel()
+                    ->relationship('user', 'name')
+                    ,
 
                 ], layout: FiltersLayout::AboveContentCollapsible)
             ->persistFiltersInSession()
@@ -157,7 +160,7 @@ class TeamJoinResource extends Resource
                     ->button()
                     ->label(__('Filter')),
                 )
-            ->filtersFormColumns(2)
+            ->filtersFormColumns(3)
 
             ->actions([
                 Tables\Actions\Action::make('approve')
