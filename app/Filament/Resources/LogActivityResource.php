@@ -58,6 +58,7 @@ class LogActivityResource extends Resource
                         'updated' => 'warning',
                         'created' => 'success',
                         'deleted' => 'danger',
+                        default => 'primary',
                     }),
                 Tables\Columns\TextColumn::make('user_name')
                     ->label(__('User'))
@@ -99,6 +100,7 @@ class LogActivityResource extends Resource
                         'updated' => 'updated',
                         'created' => 'created',
                         'deleted' => 'deleted',
+                        'user exit' => 'user exit',
                     ]),
                 SelectFilter::make('user_id')
                     ->label(__('User'))

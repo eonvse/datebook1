@@ -108,7 +108,7 @@ class TeamJoinResource extends Resource
                     ,
             ])
             ->defaultSort('updated_at', 'desc')
-            ->defaultGroup('team.name')
+            //->defaultGroup('team.name')
             ->groups([
                 Group::make('team.name')
                     ->label(__("Team"))

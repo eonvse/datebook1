@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Team;
 
+use App\Events\ActivityCompleted;
 use App\Events\Team\UserExit;
 use App\Models\TeamJoin;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -27,20 +28,20 @@ class SendUserExit
         if (count($userTeamsIds) <= 1) exit();
 
         //проверить группу по умолчанию. Если она = покидаемой, то сменить группу по умолчанию
-        $userNewTeamsIds = array_filter($userTeamsIds, fn($value) => $value != $event->team->id );
+        $userNewTeamsIds = array_filter($userTeamsIds, fn($value) => $value != $event->team->id ); //id групп за минусом из которой выходят
         if ($event->team->id == $event->user->current_team_id) {
-            $event->user->current_team_id = array_shift($userNewTeamsIds);
+            $event->user->current_team_id = array_shift($userNewTeamsIds); //первый элемент массива оставшихся групп
             $event->user->save();
         }
 
         //удалить пользователя из группы
         $event->user->teams()->detach($event->team);
 
-        //удалить заявки на вступление в группу по пользователю и лог статусов
+        //удалить заявки на вступление в группу
         TeamJoin::where('user_id','=',$event->user->id)->where('team_id','=',$event->team->id)->first()->delete();
 
-
-        //лог активности ???
+        //лог активности
+        ActivityCompleted::dispatch('user exit',$event->team);
 
         //отправить уведомление о выходе пользователя ???
     }
