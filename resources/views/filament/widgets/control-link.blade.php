@@ -5,7 +5,7 @@
             <div class='flex-1'>
                 <p class="h-5 text-xl text-gray-950 dark:text-white font-bold">{{ config('app.name', 'Laravel') }}</p>
                 <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                    v {{ env('APP_VERSION','0.1.0') }}
+                    v {{ config('app.version','0.1.0') }}
                 </p>
             </div>
             <div class="flex flex-col items-end gap-y-1">
