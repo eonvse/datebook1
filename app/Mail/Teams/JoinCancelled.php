@@ -31,7 +31,7 @@ class JoinCancelled extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: env('APP_NAME').': заявка на вступление в группу',
+            subject: config('app.name','Laravel').': заявка на вступление в группу',
         );
     }
 

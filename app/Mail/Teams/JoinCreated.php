@@ -33,7 +33,7 @@ class JoinCreated extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: env('APP_NAME').': новая заявка на вступление в группу',
+            subject: config('app.name','Laravel').': новая заявка на вступление в группу',
         );
     }
 
