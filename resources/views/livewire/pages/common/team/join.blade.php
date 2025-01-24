@@ -108,7 +108,7 @@ $sendExit = function() {
                 <span class="text-sm text-gray-400">(Материалов: {{ $teamUser->materials()->count() }})</span>
             </div>
             @if ($countTeams>1)
-            <div class="grow text-right"><x-button.warning wire:click="showModalExit({{ $teamUser }})">Покинуть группу</x-button.warning></div>
+            <div class="grow text-right"><x-button.warning wire:click="showModalExit({{ $teamUser }})">{{ __('Exit') }}</x-button.warning></div>
             @endif
         </div>
     @endforeach
