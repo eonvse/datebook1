@@ -63,6 +63,7 @@ $sendExit = function() {
 ?>
 
 <div>
+    @if ($teams->count() > 0)
     <div class="font-semibold text-lg mt-2">Заявки на вступление:</div>
     @foreach ($teams as $team)
         <div class="grid grid-cols-3 md:grid-cols-6 items-center border-b">
@@ -91,6 +92,7 @@ $sendExit = function() {
             <div class="my-1 p-1 text-wrap flex md:col-span-3"><span>{{ $team->info }}</span></div>
         </div>
     @endforeach
+    @endif
     <div class="font-semibold text-lg mt-5">Вы состоите в следующих группах</div>
     @php
         $countTeams = auth()->user()->teams->count();

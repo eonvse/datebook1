@@ -31,7 +31,7 @@ class JoinApproved extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: config('app.name','Laravel').': заявка на вступление в группу',
+            subject: 'Заявка на вступление в группу',
         );
     }
 
