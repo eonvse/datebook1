@@ -146,12 +146,14 @@
     "Saved status":"Сохранен статус",
     "Status deleted":"Статус удален",
 
-    "Joining the team":"Вступить в группу",
+    "Joining the team":"Управление группами",
     "Join":"Вступить",
     "TeamJoin":"Заявка на вступление",
     "TeamsJoin":"Заявки на вступление",
     "Note":"Заметка",
     "Executor":"Исполнитель",
+    "Exit":"Выйти",
+    "Team exit":"Выйти из группы",
 
 
     "Register": "Регистрация"
