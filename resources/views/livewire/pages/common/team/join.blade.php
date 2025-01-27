@@ -145,7 +145,6 @@ $sendExit = function() {
                         <div>{{ $delRecord->name ?? '' }}</div>
                     </div>
                     <div>{!! $delRecord->content ?? '' !!}</div>
-                    <div class="text-red-600 dark:text-red-200 shadow p-1">{{ __('Team Exit Message') }}</div>
                 </x-input.label>
                 <x-button.secondary wire:click="closeModalExit">{{ __('Cancel') }}</x-button.secondary>
                 <x-button.danger wire:click="sendExit()">{{ __('Exit')}}</x-button.danger>
