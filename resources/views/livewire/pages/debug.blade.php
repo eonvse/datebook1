@@ -11,6 +11,7 @@ uses(InteractsWithBanner::class);
 state([
     'notifications' => false,
     'testRole' => '',
+    'onoff' => false,
 ]);
 
 state ('teamJoin');
@@ -62,18 +63,9 @@ $notificationDispatch = function() {
     <div class="p-2">
         <x-input.switch />
     </div>
-
-    <div class="toggle-button-cover">
-        <div class="button-cover">
-          <div class="button b2" id="button-14">
-            <input type="checkbox" class="checkbox" />
-            <div class="knobs">
-              <span></span>
-            </div>
-            <div class="layer"></div>
-          </div>
-        </div>
-      </div>
-
+    <div class="flex space-x-3 items-center">
+        <x-input.switch-on-off rect=1 wire:model.live="onoff" />
+        <div>Дальше {{ $onoff }}</div>
+    </div>
 </div>
 
