@@ -59,6 +59,21 @@ $notificationDispatch = function() {
     <x-marker type="success">
         marker type success
     </x-marker>
+    <div class="p-2">
+        <x-input.switch />
+    </div>
+
+    <div class="toggle-button-cover">
+        <div class="button-cover">
+          <div class="button b2" id="button-14">
+            <input type="checkbox" class="checkbox" />
+            <div class="knobs">
+              <span></span>
+            </div>
+            <div class="layer"></div>
+          </div>
+        </div>
+      </div>
 
 </div>
 
