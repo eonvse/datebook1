@@ -78,6 +78,7 @@ class MaterialResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->translateLabel()
+                    ->wrap()
                     ->searchable(),
                 Tables\Columns\TextInputColumn::make('order')
                     ->translateLabel()
