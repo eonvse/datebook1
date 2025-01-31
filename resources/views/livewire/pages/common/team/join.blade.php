@@ -3,6 +3,8 @@
 use App\Models\Team;
 use App\Events\TeamJoining;
 use App\Events\Team\UserExit;
+use App\Events\Subscribe\Activate as ActivateSubscribe;
+use App\Events\Subscribe\Disable as DisableSubscribe; 
 use Laravel\Jetstream\InteractsWithBanner;
 use function Livewire\Volt\{state,mount,uses};
 
@@ -55,7 +57,20 @@ $sendExit = function() {
     $this->banner('Вы вышли из группы '.$this->currentTeam->name);
     return redirect(request()->header('Referer'));
     //$this->closeModalExit();
-}
+};
+
+$subscribe = function ($teamId) {
+    $user = Auth::user();
+    $team = Team::find($teamId);
+    if (!$team->isUserSubscribed($user->id)) {
+        ActivateSubscribe::dispatch($user,$team);
+        $this->banner('Вы подписаны на рассылку email уведомлений по группе '.$team->name);
+    }else {
+        DisableSubscribe::dispatch($user,$team);
+        $this->banner('Вы отписаны от рассылки email уведомлений по группе '.$team->name);
+    }
+
+};
 
 
 //
@@ -107,9 +122,16 @@ $sendExit = function() {
                 {{ $teamUser->info ?? '' }}
                 <span class="text-sm text-gray-400">(Материалов: {{ $teamUser->materials()->count() }})</span>
             </div>
+            <div class="grow flex text-right items-center space-x-2">
+            <div class="grow flex items-center space-x-1">
+                <div class="grow"></div>
+                <x-mail-icon />
+                <x-input.switch-on-off rect=1  checked="{{ $teamUser->isUserSubscribed(auth()->user()->id) }}" wire:click="subscribe({{ $teamUser->id }})" />
+            </div>
             @if ($countTeams>1)
-            <div class="grow text-right"><x-button.warning wire:click="showModalExit({{ $teamUser }})">{{ __('Exit') }}</x-button.warning></div>
+            <div><x-button.warning wire:click="showModalExit({{ $teamUser }})">{{ __('Exit') }}</x-button.warning></div>
             @endif
+            </div>
         </div>
     @endforeach
     <div>

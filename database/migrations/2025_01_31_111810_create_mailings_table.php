@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('mailings', function (Blueprint $table) {
+            $table->id(); // Уникальный идентификатор рассылки
+            $table->unsignedBigInteger('user_id'); // Внешний ключ для связи с таблицей users
+            $table->boolean('is_active')->default(false); // Флаг активности подписки
+            $table->timestamp('subscribed_at')->useCurrent(); // Дата подписки
+
+            // Полиморфные поля
+            $table->nullableMorphs('owner'); // owner_id и owner_type
+
+            $table->timestamps(); // Поля created_at и updated_at
+
+            // Внешний ключ для связи с таблицей users
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade'); // Каскадное удаление
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('mailings');
+    }
+};

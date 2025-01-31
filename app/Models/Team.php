@@ -38,6 +38,16 @@ class Team extends Model
     {
         return $this->teamJoin()->where('user_id', $userId)->first();
     }
+    //Действующие подписки на группу
+    public function subscriptions() {
+        return $this->morphMany(Mailing::class,'owner')->chaperone();
+    }
+
+    // Проверка подписки пользователя на группу
+    public function isUserSubscribed($userId) : bool {
+        if (empty($this->subscriptions()->where('user_id',$userId)->first())) return false;
+        return $this->subscriptions()->where('user_id',$userId)->first()->is_active;
+    }
 
     /**
      * Регистрация активности по событиям модели.
