@@ -32,6 +32,6 @@ class SendUserCreated
         $event->user->current_team_id = $defaultTeam->id;
         $event->user->save();
 
-        //Назначение роль по умолчанию TODO
+        //Назначение роли по умолчанию TODO
     }
 }

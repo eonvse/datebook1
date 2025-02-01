@@ -4,7 +4,7 @@ use App\Models\Team;
 use App\Events\TeamJoining;
 use App\Events\Team\UserExit;
 use App\Events\Subscribe\Activate as ActivateSubscribe;
-use App\Events\Subscribe\Disable as DisableSubscribe; 
+use App\Events\Subscribe\Disable as DisableSubscribe;
 use Laravel\Jetstream\InteractsWithBanner;
 use function Livewire\Volt\{state,mount,uses};
 
@@ -38,7 +38,7 @@ $closeModalJoin = function (){
 
 $sendJoin = function() {
     TeamJoining::dispatch(Auth::user(), $this->currentTeam, $this->currentNote);
-    $this->banner('Заявка отправлена');
+    $this->banner('Заявка на вступление в группу '.$this->currentTeam->name.' отправлена');
     $this->closeModalJoin();
 };
 
@@ -123,14 +123,16 @@ $subscribe = function ($teamId) {
                 <span class="text-sm text-gray-400">(Материалов: {{ $teamUser->materials()->count() }})</span>
             </div>
             <div class="grow flex text-right items-center space-x-2">
-            <div class="grow flex items-center space-x-1">
                 <div class="grow"></div>
-                <x-mail-icon />
-                <x-input.switch-on-off rect=1  checked="{{ $teamUser->isUserSubscribed(auth()->user()->id) }}" wire:click="subscribe({{ $teamUser->id }})" />
-            </div>
-            @if ($countTeams>1)
-            <div><x-button.warning wire:click="showModalExit({{ $teamUser }})">{{ __('Exit') }}</x-button.warning></div>
-            @endif
+                @if (auth()->user()->hasRole(config('roles.admin_teams','Root')))
+                <div class="flex items-center space-x-1">
+                    <x-mail-icon />
+                    <x-input.switch-on-off rect=1  checked="{{ $teamUser->isUserSubscribed(auth()->user()->id) }}" wire:click="subscribe({{ $teamUser->id }})" />
+                </div>
+                @endif
+                @if ($countTeams>1)
+                <div><x-button.warning wire:click="showModalExit({{ $teamUser }})">{{ __('Exit') }}</x-button.warning></div>
+                @endif
             </div>
         </div>
     @endforeach

@@ -38,7 +38,8 @@ class SendUserExit
         $event->user->teams()->detach($event->team);
 
         //удалить заявки на вступление в группу
-        TeamJoin::where('user_id','=',$event->user->id)->where('team_id','=',$event->team->id)->first()->delete();
+        $currentTeamJoin = TeamJoin::where('user_id','=',$event->user->id)->where('team_id','=',$event->team->id)->first();
+        if (!empty($currentTeamJoin)) $currentTeamJoin->delete();
 
         //лог активности
         ActivityCompleted::dispatch('user exit',$event->team);

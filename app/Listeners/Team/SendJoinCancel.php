@@ -29,7 +29,7 @@ class SendJoinCancel
     {
         $team_join = $event->teamJoin;
 
-        //запись в журнал статуса успешного подтверждения запроса на вступление в группу
+        //запись в журнал статуса отмены запроса на вступление в группу
         $statusCanceled =
             Status::where('name','=','cancelled')->where('model','=',$team_join::class)->get()->first() ??
                 Status::create(['name'=>'cancelled','model'=>$team_join::class, 'description'=>'Заявка отклонена']);
@@ -41,7 +41,7 @@ class SendJoinCancel
             'user_id' => $event->author->id
         ]);
 
-        //отправка уведомления пользователю о подтверждении заявки
+        //отправка уведомления пользователю об отмене заявки
         $joinUser = User::find($team_join->user_id);
         $joinTeam = Team::find($team_join->team_id);
         Mail::to($joinUser->email)->send(new JoinCancelled($joinTeam,$joinUser->name));

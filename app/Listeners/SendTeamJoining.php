@@ -46,9 +46,10 @@ class SendTeamJoining
             'user_id' => $event->user->id
         ]);
 
-        //Выбор email пользователей с необходимыми ролями и отправка им сообщения
-        foreach (TeamsDB::getRolesEmails('Root|Teams Admin') as $email) {
-            Mail::to($email)->send(new JoinCreated($event->team,$event->user,$event->note));
+        //Выбор подписчиков группы и отправка им сообщения
+        foreach ($event->team->subscriptions as $subscription) {
+            Mail::to($subscription->user->email)->send(new JoinCreated($event->team,$event->user,$event->note));
         }
+
     }
 }

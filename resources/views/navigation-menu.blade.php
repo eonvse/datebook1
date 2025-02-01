@@ -20,7 +20,7 @@
                         {{ __('Debug page') }}
                     </x-nav-link>
 
-                    @if (auth()->user()->hasRole('Root|Admin|Control'))
+                    @if (auth()->user()->hasRole(config('roles.control_users','Root')))
                     <x-nav-link :href="route('filament.control.tenant')">
                         {{ __('Control') }}
                     </x-nav-link>

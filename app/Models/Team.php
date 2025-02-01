@@ -40,7 +40,7 @@ class Team extends Model
     }
     //Действующие подписки на группу
     public function subscriptions() {
-        return $this->morphMany(Mailing::class,'owner')->chaperone();
+        return $this->morphMany(Mailing::class,'owner')->chaperone()->where('is_active', true);
     }
 
     // Проверка подписки пользователя на группу
