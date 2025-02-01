@@ -42,6 +42,7 @@ class CategoryesTable extends BaseWidget
                     ->weight(FontWeight::Medium)
                     ,
                 Tables\Columns\TextColumn::make('category_description')
+                    ->wrap()
                     ->label(__('Description')),
                 Tables\Columns\TextColumn::make('materials_count')
                     ->label(__('Materials count'))
