@@ -25,8 +25,8 @@ class SendDelete
     {
         $teamId = $event->team->id;
         $idsDelete = TeamJoin::where('team_id', $teamId)->pluck('id')->toArray();
-        LogStatus::where('owner_type','=',TeamJoin::class)->whereIn('owner_id',$idsDelete)->delete();
-        TeamJoin::where('team_id', $teamId)->delete();
+        LogStatus::where('owner_type','=',TeamJoin::class)->whereIn('owner_id',$idsDelete)->delete(); // удалить все статусы по группе
+        TeamJoin::where('team_id', $teamId)->delete(); //Удалить все заявки на вступление по группе
 
     }
 }
