@@ -14,6 +14,10 @@ class CommonController extends Controller
         return view('common/team_join');
     }
 
+    public function category_materials() {
+        return view('common/category_materials');
+    }
+
     public function current_team_update(Request $request){
         $team = Team::findOrFail($request->team_id);
 
@@ -21,7 +25,7 @@ class CommonController extends Controller
             abort(403);
         }
 
-        return redirect('start', 303);
+        return redirect('category', 303);
 
     }
 }
