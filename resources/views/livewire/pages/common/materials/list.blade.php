@@ -33,12 +33,12 @@ on(['setCategory' => function ($categoryId) {
 
 ?>
 
-<div>
+<div class="relative w-full h-full">
     @if (is_null($currentCategory))
         <div>Выберите категорию из списка слева</div>
     @else
     <h3>{{ $currentCategory->name ?? 'Без категории' }}</h3>
-    <div>{{ $currentCategory->description ?? 'Категория материалов не указана' }}</div>    
+    <div>{{ $currentCategory->description ?? 'Категория материалов не указана' }}</div>
     @forelse ($materials as $material)
         <div class="border-b border-gray-200 dark:border-gray-700 px-4 py-2">
             <div class="flex justify-between items-center">
@@ -50,4 +50,7 @@ on(['setCategory' => function ($categoryId) {
         {{ __('Not found materials') }}
     @endforelse
     @endif
+    <div wire:loading>
+        <x-spinner-circle />
+    </div>
 </div>

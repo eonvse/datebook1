@@ -67,5 +67,8 @@ $notificationDispatch = function() {
         <x-input.switch-on-off rect=1 wire:model.live="onoff" />
         <div>Дальше {{ $onoff }}</div>
     </div>
+    <div>
+        <x-spinner-circle />
+    </div>
 </div>
 
