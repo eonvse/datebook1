@@ -8,27 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 
 use function Livewire\Volt\{state,mount};
 
-state('categoriesCurrentTeam');
-state('currentCategory');
 state('currentTeamId');
+state('categoriesCurrentTeam');
+state(['currentCategoryId'=>null]);
 
 mount(function(){
     $this->currentTeamId =auth()->user()->currentTeam->id;
 
     $this->categoriesCurrentTeam = Teams::getCategoriesCurrentTeam($this->currentTeamId);
 
-    $this->currentCategory = $this->categoriesCurrentTeam->first()->count()>0 ? MaterialCategory::find($this->categoriesCurrentTeam->first()->material_category_id) : null;
-
-    $sendCategoryId = $this->currentCategory->id ?? null;
-    $this->setCurrentCategory($sendCategoryId);
-
 });
 
 $setCurrentCategory = function($categoryId) {
-
-    $this->currentCategory = MaterialCategory::find($categoryId) ?? null;
-
-    $this->dispatch('setCategory', categoryId: $this->currentCategory);
+    
+    $this->currentCategoryId = $categoryId;
+    
+    $this->dispatch('setCategory', categoryId: $this->currentCategoryId);
 
     $this->categoriesCurrentTeam = Teams::getCategoriesCurrentTeam($this->currentTeamId);
 
@@ -39,9 +34,8 @@ $setCurrentCategory = function($categoryId) {
 ?>
 
 <div class="bg-neutral-50 p-2 rounded-md">
-    {{ $currentCategory->name ?? '-1' }}
     @forelse ($categoriesCurrentTeam as $category)
-        <div class="cursor-pointer m-1 p-1 hover:font-semibold hover:shadow-md hover:bg-white rounded-md" wire:click="setCurrentCategory({{ $category->category_id }})">
+        <div class="cursor-pointer m-1 p-1 {{ $category->category_id == $currentCategoryId ? 'font-semibold shadow-md bg-white' : '' }} hover:font-semibold hover:shadow-md hover:bg-white rounded-md" wire:click="setCurrentCategory({{ $category->category_id }})">
             {{  $category->category_name }}
             <span class="text-gray-400">({{ $category->materials_count }})</span>
         </div>
