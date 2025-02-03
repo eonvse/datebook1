@@ -35,15 +35,18 @@ on(['setCategory' => function ($categoryId) {
 
 <div class="relative w-full h-full">
     @if (is_null($currentCategory))
-        <div>Выберите категорию из списка слева</div>
+        <div>
+            <span class="md:hidden">&#128070;</span>
+            <span class="hidden md:inline-block">&#128072;</span>
+            Выберите категорию</div>
     @else
-    <h3>{{ $currentCategory->name ?? 'Без категории' }}</h3>
-    <div>{{ $currentCategory->description ?? 'Категория материалов не указана' }}</div>
+    <h3 class="text-center text-xl font-semibold p-1">{{ $currentCategory->name ?? 'Без категории' }}</h3>
+    <div class="p-3 text-neutral-500 text-right">{{ $currentCategory->description ?? 'Категория материалов не указана' }}</div>
     @forelse ($materials as $material)
         <div class="border-b border-gray-200 dark:border-gray-700 px-4 py-2">
-            <div class="flex justify-between items-center">
-                <div>{{ $material->name }}</div>
-                <div>{{ $material->annotation }}</div>
+            <div class="">
+                <div class="font-medium">{{ $material->name }}</div>
+                <div class="p-1 text-neutral-500">{{ $material->annotation }}</div>
             </div>
         </div>
     @empty

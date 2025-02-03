@@ -16,6 +16,10 @@
                         {{ __('Start page') }}
                     </x-nav-link>
 
+                    <x-nav-link href="{{ route('materials.category') }}" :active="request()->routeIs('materials.category')">
+                        {{ __('materials.category') }}
+                    </x-nav-link>
+
                     <x-nav-link href="{{ route('debug') }}" :active="request()->routeIs('debug')">
                         {{ __('Debug page') }}
                     </x-nav-link>
@@ -145,6 +149,9 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('start') }}" :active="request()->routeIs('start')">
                 {{ __('Start page') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('materials.category') }}" :active="request()->routeIs('materials.category')">
+                {{ __('materials.category') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('debug') }}" :active="request()->routeIs('debug')">
                 {{ __('Debug page') }}
