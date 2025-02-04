@@ -45,7 +45,7 @@ on(['setCategory' => function ($categoryId) {
     @forelse ($materials as $material)
         <div class="border-b border-gray-200 dark:border-gray-700 px-4 py-2">
             <div class="">
-                <div class="font-medium">{{ $material->name }}</div>
+                <div class="font-medium"><a href="{{ route('materials.show', $material->slug) }}">{{ $material->name }}</a></div>
                 <div class="p-1 text-neutral-500">{{ $material->annotation }}</div>
             </div>
         </div>

@@ -9,5 +9,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/team/current/update', [CommonController::class, 'current_team_update'])->name('current-team.update');
 
     Route::get('/category', [CommonController::class, 'category_materials'])->name('materials.category');
+    Route::get('/materials/{material:slug}', [CommonController::class, 'material_show'])->name('materials.show');
 
 });

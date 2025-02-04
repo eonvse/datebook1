@@ -11,6 +11,11 @@ class Material extends Model
 {
     protected $fillable = ['name','slug','order','annotation','text','team_id','material_category_id','user_id'];
 
+    public function getRouteKeyName()
+    {
+        return 'slug'; // Используем поле slug для маршрутов
+    }
+
     public function team():BelongsTo
     {
         return $this->belongsTo(Team::class);
