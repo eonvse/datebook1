@@ -1,33 +1,27 @@
 <?php
 
+use App\DB\Materials as MaterialsDB;
 use App\Models\Material;
 use App\Models\MaterialCategory;
+use Livewire\WithoutUrlPagination;
 
-use function Livewire\Volt\{state, on, mount};
+use function Livewire\Volt\{state, on, with, usesPagination, uses};
+
+usesPagination();
+uses(WithoutUrlPagination::class);
 
 state([
-    'currentCategoryId' => null,
+    'currentCategoryId' => -1,
     'currentCategory'=>null,
-    'materials' => array(),
 ]);
 
+with(fn () => ['materials' => MaterialsDB::getMaterials($this->currentCategoryId)->paginate(5)]);
+
 on(['setCategory' => function ($categoryId) {
+    $this->resetPage();
     $this->currentCategoryId = $categoryId;
-    if ($this->currentCategoryId==-1) {
-        $this->materials = Material::where('team_id', auth()->user()->currentTeam->id)
-                                ->whereNull('material_category_id')
-                                ->orderBy('order', 'ASC')
-                                ->orderBy('name', 'ASC')
-                                ->get();
-        $this->currentCategory = 'Без категории';
-    }else{
-        $this->materials = Material::where('team_id', auth()->user()->currentTeam->id)
-                                ->where('material_category_id',$categoryId)
-                                ->orderBy('order', 'ASC')
-                                ->orderBy('name', 'ASC')
-                                ->get();
-        $this->currentCategory = MaterialCategory::find($categoryId);
-    }
+    if ($this->currentCategoryId==-1) $this->currentCategory = 'Без категории';
+    else $this->currentCategory = MaterialCategory::find($categoryId);
 }]);
 //
 
@@ -60,6 +54,7 @@ on(['setCategory' => function ($categoryId) {
     @empty
         {{ __('Not found materials') }}
     @endforelse
+    {{ $materials->links() }}
     @endif
     <div wire:loading>
         <x-spinner-circle />
