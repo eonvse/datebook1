@@ -12,10 +12,12 @@ state('currentTeamId');
 state('categoriesCurrentTeam');
 state(['currentCategoryId'=>null]);
 
-mount(function(){
+mount(function($idCategory=null){
     $this->currentTeamId =auth()->user()->currentTeam->id;
 
     $this->categoriesCurrentTeam = Teams::getCategoriesCurrentTeam($this->currentTeamId);
+
+    $this->currentCategoryId = $idCategory;
 
 });
 
@@ -34,6 +36,7 @@ $setCurrentCategory = function($categoryId) {
 ?>
 
 <div class="w-full h-full">
+    {{ $currentCategoryId }}
     <div class="bg-neutral-50 p-2 rounded-md">
     @forelse ($categoriesCurrentTeam as $category)
         <div class="relative cursor-pointer m-1 p-1 {{ $category->category_id == $currentCategoryId ? 'font-semibold shadow-md bg-white' : '' }} hover:font-semibold hover:shadow-md hover:bg-white rounded-md" wire:click="setCurrentCategory({{ $category->category_id }})">

@@ -6,10 +6,10 @@
     </x-slot>
     <div class="sm:grid md:grid-cols-6">
         <div class="md:col-span-2 text-wrap">
-            <livewire:pages.common.materials.category />
+            <livewire:pages.common.materials.category :idCategory="$id" />
         </div>
         <div class="md:col-span-4 text-wrap">
-            <livewire:pages.common.materials.list />
+            <livewire:pages.common.materials.list :idCategory="$id" />
         </div>
     </div>
 

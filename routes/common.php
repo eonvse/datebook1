@@ -8,7 +8,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/team/join', [CommonController::class, 'team_join'])->name('team_join');
     Route::put('/team/current/update', [CommonController::class, 'current_team_update'])->name('current-team.update');
 
-    Route::get('/category', [CommonController::class, 'category_materials'])->name('materials.category');
+    Route::get('/category/{id?}', [CommonController::class, 'category_materials'])->name('materials.category');
     Route::get('/materials/{material:slug}', [CommonController::class, 'material_show'])->name('materials.show');
 
 });

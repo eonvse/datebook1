@@ -15,8 +15,8 @@ class CommonController extends Controller
         return view('common/team_join');
     }
 
-    public function category_materials() {
-        return view('common/category_materials');
+    public function category_materials($id=null) {
+        return view('common/category_materials', ['id' => $id]);
     }
 
     public function material_show(Material $material){

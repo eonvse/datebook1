@@ -5,15 +5,21 @@ use App\Models\Material;
 use App\Models\MaterialCategory;
 use Livewire\WithoutUrlPagination;
 
-use function Livewire\Volt\{state, on, with, usesPagination, uses};
+use function Livewire\Volt\{state, on, mount, with, usesPagination, uses};
 
 usesPagination();
 uses(WithoutUrlPagination::class);
 
 state([
-    'currentCategoryId' => -1,
     'currentCategory'=>null,
 ]);
+
+state('currentCategoryId');
+
+mount(function ($idCategory=null) {
+    $this->currentCategoryId = $idCategory ?? -1;
+    if ($this->currentCategoryId>0) $this->currentCategory = MaterialCategory::find($this->currentCategoryId);
+});
 
 with(fn () => ['materials' => MaterialsDB::getMaterials($this->currentCategoryId)->paginate(5)]);
 
