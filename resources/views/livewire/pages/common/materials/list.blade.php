@@ -40,7 +40,15 @@ on(['setCategory' => function ($categoryId) {
             <span class="hidden md:inline-block">&#128072;</span>
             Выберите категорию</div>
     @else
-    <h3 class="text-center text-xl font-semibold p-1">{{ $currentCategory->name ?? 'Без категории' }}</h3>
+    <div class="md:flex justify-between p-1">
+        <h3 class="text-center text-xl font-semibold md:ml-20">{{ $currentCategory->name ?? 'Без категории' }}</h3>
+        @if (!empty($currentCategory->name))
+        <div class="flex space-x-1 items-center justify-end">
+            <x-mail-icon />
+            <x-input.switch-on-off rect=1 />
+        </div>
+        @endif
+    </div>
     <div class="p-3 text-neutral-500 text-right">{{ $currentCategory->description ?? '' }}</div>
     @forelse ($materials as $material)
         <div class="border-b border-gray-200 dark:border-gray-700 px-4 py-2">
