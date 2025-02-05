@@ -4,12 +4,16 @@ namespace App\Models;
 
 use App\Events\ActivityCompleted;
 use App\Events\Team\Delete as DeleteTeam;
+use App\Traits\HasSubscriptions;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Team extends Model
 {
+    use HasSubscriptions;
+
     protected $fillable = ['name', 'color', 'info','slug'];
 
     //protected $touches = ['users'];
@@ -37,16 +41,6 @@ class Team extends Model
     public function teamJoinUser($userId)
     {
         return $this->teamJoin()->where('user_id', $userId)->first();
-    }
-    //Действующие подписки на группу
-    public function subscriptions() {
-        return $this->morphMany(Mailing::class,'owner')->chaperone()->where('is_active', true);
-    }
-
-    // Проверка подписки пользователя на группу
-    public function isUserSubscribed($userId) : bool {
-        if (empty($this->subscriptions()->where('user_id',$userId)->first())) return false;
-        return $this->subscriptions()->where('user_id',$userId)->first()->is_active;
     }
 
     /**
