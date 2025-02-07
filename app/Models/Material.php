@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\ActivityCompleted;
+use App\Events\MaterialCreated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -41,6 +42,7 @@ class Material extends Model
     {
         static::created(function (Material $material) {
             ActivityCompleted::dispatch('created',$material);
+            MaterialCreated::dispatch($material); // Отправка почты подписчикам группы о добавлении нового материала
         });
         static::updated(function (Material $material) {
             ActivityCompleted::dispatch('updated',$material);
