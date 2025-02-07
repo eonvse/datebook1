@@ -1,15 +1,16 @@
 <x-mail::message>
-# Новый материал в категории
+# {{ $categoryName }}
 
 В категорию "{{ $categoryName }}" добавлен новый материал "{{ $materialName }}".
 @if (!empty($materialAnnotation))
+<x-mail::panel>
 Аннотация: {{ $materialAnnotation }}
+</x-mail::panel>
 @endif
 
-<x-mail::button :url="{{ $materialLink }}">
+<x-mail::button :url="$materialLink" color="success">
 Открыть на сайте
 </x-mail::button>
 
-Отправлено автоматически,<br>
-{{ config('app.name') }}
+Отправлено автоматически + поясниловка об отмене и прочем...
 </x-mail::message>

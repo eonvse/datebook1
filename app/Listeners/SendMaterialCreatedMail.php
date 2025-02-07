@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendMaterialCreated
+class SendMaterialCreatedMail
 {
     /**
      * Create the event listener.
@@ -23,9 +23,10 @@ class SendMaterialCreated
      */
     public function handle(MaterialCreated $event): void
     {
-        foreach ($event->material->category->subscriptions as $subscription) {
-            Mail::to($subscription->user->email)->send(new MailCreated($event->material));
-        }
+        if (isset($event->material->category))
+            foreach ($event->material->category->subscriptions as $subscription) {
+                Mail::to($subscription->user->email)->send(new MailCreated($event->material));
+            }
 
     }
 }
