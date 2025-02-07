@@ -3,12 +3,16 @@
 namespace App\Models;
 
 use App\Events\ActivityCompleted;
+use App\Traits\HasSubscriptions;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MaterialCategory extends Model
 {
+    use HasSubscriptions;
+
     protected $fillable = ['name','slug','order','description','team_id','user_id'];
 
     public function team(): BelongsTo
