@@ -3,8 +3,9 @@
 
 В категорию "{{ $categoryName }}" добавлен новый материал "{{ $materialName }}".
 @if (!empty($materialAnnotation))
+Аннотация:
 <x-mail::panel>
-Аннотация: {{ $materialAnnotation }}
+{{ $materialAnnotation }}
 </x-mail::panel>
 @endif
 
