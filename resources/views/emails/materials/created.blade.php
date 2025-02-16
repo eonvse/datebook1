@@ -1,9 +1,9 @@
 <x-mail::message>
-# {{ $categoryName }}
+# {{ $teamName }} : {{ $categoryName }}
 
 В категорию "{{ $categoryName }}" добавлен новый материал "{{ $materialName }}".
 @if (!empty($materialAnnotation))
-Аннотация:
+## Аннотация:
 <x-mail::panel>
 {{ $materialAnnotation }}
 </x-mail::panel>

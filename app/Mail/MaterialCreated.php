@@ -32,7 +32,7 @@ class MaterialCreated extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Новый материал',
+            subject: 'Новый материал в категории "'. $this->material->category->name .'" группы "'. $this->material->team->name . '"',
         );
     }
 
@@ -44,6 +44,7 @@ class MaterialCreated extends Mailable
         return new Content(
             markdown: 'emails.materials.created',
             with: [
+                'teamName' => $this->material->team->name,
                 'categoryName' => $this->material->category->name,
                 'materialName' => $this->material->name,
                 'materialAnnotation' => $this->material->annotation,
