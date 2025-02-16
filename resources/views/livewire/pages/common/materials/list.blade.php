@@ -17,18 +17,21 @@ uses(InteractsWithBanner::class);
 
 state([
     'currentCategory'=>null,
+    'perPage'=>5,
 ]);
 
 state('currentCategoryId');
+state('pagination');
 
 mount(function ($idCategory=null) {
     $this->currentCategoryId = $idCategory ?? -1;
     if ($this->currentCategoryId>0) $this->currentCategory = MaterialCategory::where('team_id',auth()->user()->current_team_id)
                                                             ->where('id',$this->currentCategoryId)->first();
     else $this->currentCategory = 'Без категории';
+    $this->pagination = config('app.pagination');
 });
 
-with(fn () => ['materials' => MaterialsDB::getMaterials($this->currentCategoryId)->paginate(5)]);
+with(fn () => ['materials' => MaterialsDB::getMaterials($this->currentCategoryId)->paginate($this->perPage)]);
 
 on(['setCategory' => function ($categoryId) {
     $this->resetPage();
@@ -71,6 +74,9 @@ $subscribe = function () {
         @endif
     </div>
     <div class="p-3 text-neutral-500 text-right">{{ $currentCategory->description ?? '' }}</div>
+    <div>
+        <x-input.select :items="$pagination" none="false" wire:model.live="perPage" />
+    </div>
     @forelse ($materials as $material)
         <div class="border-b border-gray-200 dark:border-gray-700 px-4 py-2">
             <div class="">
