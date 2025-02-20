@@ -9,7 +9,7 @@ use App\Events\Subscribe\Disable as DisableSubscribe;
 use Laravel\Jetstream\InteractsWithBanner;
 use Livewire\WithoutUrlPagination;
 
-use function Livewire\Volt\{state, on, mount, with, usesPagination, uses};
+use function Livewire\Volt\{state, on, mount, with, usesPagination, uses, updated};
 
 usesPagination();
 uses(WithoutUrlPagination::class);
@@ -17,21 +17,22 @@ uses(InteractsWithBanner::class);
 
 state([
     'currentCategory'=>null,
-    'perPage'=>5,
 ]);
 
 state('currentCategoryId');
 state('pagination');
+state('perPage');
 
 mount(function ($idCategory=null) {
     $this->currentCategoryId = $idCategory ?? -1;
     if ($this->currentCategoryId>0) $this->currentCategory = MaterialCategory::where('team_id',auth()->user()->current_team_id)
                                                             ->where('id',$this->currentCategoryId)->first();
     else $this->currentCategory = 'Без категории';
-    $this->pagination = config('app.pagination');
+    $this->pagination = config('app.pagination',[['id'=> '10','name' => '10']]);
+    $this->perPage = config('app.perPage',10);
 });
 
-with(fn () => ['materials' => MaterialsDB::getMaterials($this->currentCategoryId)->paginate($this->perPage)]);
+with(fn () => ['materials' => MaterialsDB::getMaterials($this->currentCategoryId)->paginate($this->perPage === 'all' ? Material::count() : $this->perPage)]);
 
 on(['setCategory' => function ($categoryId) {
     $this->resetPage();
@@ -39,6 +40,8 @@ on(['setCategory' => function ($categoryId) {
     if ($this->currentCategoryId==-1) $this->currentCategory = 'Без категории';
     else $this->currentCategory = MaterialCategory::find($categoryId);
 }]);
+
+updated(['perPage' => fn () => $this->resetPage()]);
 
 $subscribe = function () {
     $user = auth()->user();
@@ -74,9 +77,14 @@ $subscribe = function () {
         @endif
     </div>
     <div class="p-3 text-neutral-500 text-right">{{ $currentCategory->description ?? '' }}</div>
-    <div>
-        <x-input.select :items="$pagination" none="false" wire:model.live="perPage" />
+    <div class="py-2 md:flex items-center">
+        <div>Сортировка</div>
+        <div class="grow">Поиск</div>
+        <div class="md:flex-none md:w-16">
+            <x-input.select :items="$pagination" none="false" wire:model.live="perPage" />
+        </div>
     </div>
+    {{ $materials->links() }}
     @forelse ($materials as $material)
         <div class="border-b border-gray-200 dark:border-gray-700 px-4 py-2">
             <div class="">

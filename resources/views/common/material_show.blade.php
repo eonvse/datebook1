@@ -11,6 +11,8 @@
     </x-slot>
 
     <div class="text-center text-xl font-semibold p-1">{{ $material->name }}</div>
+    <div class="p-3 text-neutral-500 text-right">{{ $material->annotation ?? '' }}</div>
+    <div>TODO приложенные файлы</div>
     <div class="p-3">{!! $material->text !!}</div>
 
 </x-app-layout>
