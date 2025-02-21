@@ -17,6 +17,7 @@ uses(InteractsWithBanner::class);
 
 state([
     'currentCategory'=>null,
+    'search'=>'',
 ]);
 
 state('currentCategoryId');
@@ -24,22 +25,33 @@ state('pagination');
 state('perPage');
 
 mount(function ($idCategory=null) {
-    $this->currentCategoryId = $idCategory ?? -1;
+    $this->currentCategoryId = $idCategory;
     if ($this->currentCategoryId>0) $this->currentCategory = MaterialCategory::where('team_id',auth()->user()->current_team_id)
                                                             ->where('id',$this->currentCategoryId)->first();
-    else $this->currentCategory = 'Без категории';
+    elseif (is_numeric($this->currentCategoryId)) $this->currentCategory = 'Без категории';
     $this->pagination = config('app.pagination',[['id'=> '10','name' => '10']]);
     $this->perPage = config('app.perPage',10);
 });
 
-with(fn () => ['materials' => MaterialsDB::getMaterials($this->currentCategoryId)->paginate($this->perPage === 'all' ? Material::count() : $this->perPage)]);
+with(fn () => ['materials' => MaterialsDB::getMaterials($this->currentCategoryId)
+                                ->when($this->search, function ($query) {
+                                    $query->where(function($query) {
+                                        $query->where('name', 'like', '%' . $this->search . '%')
+                                              ->orWhere('annotation', 'like', '%' . $this->search .'%');
+                                    });
+                                })
+                                ->paginate($this->perPage === 'all' ? Material::count() : $this->perPage)]);
 
 on(['setCategory' => function ($categoryId) {
     $this->resetPage();
+    $this->reset('search');
+    $this->dispatch('search-reset');
     $this->currentCategoryId = $categoryId;
     if ($this->currentCategoryId==-1) $this->currentCategory = 'Без категории';
     else $this->currentCategory = MaterialCategory::find($categoryId);
 }]);
+
+on(['search-updated' => fn($search) => $this->updateSearch($search)]);
 
 updated(['perPage' => fn () => $this->resetPage()]);
 
@@ -56,7 +68,10 @@ $subscribe = function () {
 
 };
 
-
+$updateSearch = function ($search) {
+    $this->search = $search;
+    $this->resetPage(); // Сброс пагинации при изменении поиска
+};
 
 ?>
 
@@ -79,7 +94,7 @@ $subscribe = function () {
     <div class="p-3 text-neutral-500 text-right">{{ $currentCategory->description ?? '' }}</div>
     <div class="py-2 md:flex items-center">
         <div>Сортировка</div>
-        <div class="grow">Поиск</div>
+        <div class="grow"><livewire:search-box /></div>
         <div class="md:flex-none md:w-16">
             <x-input.select :items="$pagination" none="false" wire:model.live="perPage" />
         </div>
