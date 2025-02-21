@@ -93,9 +93,9 @@ $updateSearch = function ($search) {
     </div>
     <div class="p-3 text-neutral-500 text-right">{{ $currentCategory->description ?? '' }}</div>
     <div class="py-2 md:flex items-center">
-        <div>Сортировка</div>
-        <div class="grow"><livewire:search-box /></div>
-        <div class="md:flex-none md:w-16">
+        <div class="p-1">Сортировка</div>
+        <div class="p-1 md:grow"><livewire:search-box /></div>
+        <div class="p-1 md:flex-none md:w-16">
             <x-input.select :items="$pagination" none="false" wire:model.live="perPage" />
         </div>
     </div>

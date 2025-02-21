@@ -17,8 +17,10 @@ class SearchBox extends Component
 
     public function clearSearch()
     {
-        $this->resetSearch();
-        $this->dispatch('search-updated', search: $this->search); // Отправка события
+        if (strlen($this->search)>0) {
+            $this->resetSearch();
+            $this->dispatch('search-updated', search: $this->search); // Отправка события
+        }
     }
 
     // Обновление поискового запроса

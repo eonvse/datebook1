@@ -1,19 +1,11 @@
 <div>
-    <div class="flex items-center">
+    <div class="relative">
         <!-- Поле поиска -->
-        <input
-            type="text"
+        <x-input.text
             wire:model.live.debounce.500ms="search"
-            placeholder="Поиск..."
-            class="px-4 py-2 border rounded-l focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Поиск по [названию или аннотации TODO FieldSet]..."
         />
-
         <!-- Кнопка очистки -->
-        <button
-            wire:click="clearSearch"
-            class="px-4 py-2 bg-gray-200 border border-l-0 rounded-r hover:bg-gray-300 focus:outline-none"
-        >
-            &times;
-        </button>
+        <x-button.icon-clear class="absolute top-1 right-1" title="{{ __('Clear field') }}" wire:click="clearSearch" />
     </div>
 </div>
