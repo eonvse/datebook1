@@ -3,6 +3,8 @@
 
 <img src='README.img/2025-04-20_20-27.png' />
 
+<img src='README.img/2025-04-20_20-40.png' />
+
 ## Развертывание
 ```
 git clone https://github.com/eonvse/datebook1
